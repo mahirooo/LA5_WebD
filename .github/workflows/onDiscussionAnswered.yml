@@ -1,0 +1,14 @@
+name: "onDicussionAnswered"
+on:
+  discussion:
+    types: [answered]
+jobs:
+  main:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: "Send notification"
+        run: |
+          curl -i -H 'Content-Type: application/json' -d '${{ env.EVENT }}' -L '${{ env.ON_DISCUSSION_ANSWERED_URL }}'
+        env:
+          EVENT: ${{ toJson(github.event) }}
+          ON_DISCUSSION_ANSWERED_URL: ${{ secrets.ON_DISCUSSION_ANSWERED_URL }}
