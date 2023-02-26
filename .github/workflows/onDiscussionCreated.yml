@@ -6,12 +6,7 @@ jobs:
   main:
     runs-on: ubuntu-22.04
     steps:
-      - name: "debug"
-        run: |
-          cat "$GITHUB_EVENT_PATH" | jq '@json' | sed 's/'\''/'\\\\\"'/g'
       - name: "Send notification"
         run: |
           cat "$GITHUB_EVENT_PATH" | sed 's/'\''/'\\\\\"'/g' |
-          curl -H 'Content-Type: application/json' -d @- '${{ env.ON_DISCUSSION_CREATED_URL }}'
-        env:
-          ON_DISCUSSION_CREATED_URL: ${{ secrets.ON_DISCUSSION_CREATED_URL }}
+          curl -H 'Content-Type: application/json' -d @- https://us-central1-github-discussions-notifier.cloudfunctions.net/discussion-created

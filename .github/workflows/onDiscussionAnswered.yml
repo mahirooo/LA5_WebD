@@ -8,7 +8,6 @@ jobs:
     steps:
       - name: "Send notification"
         run: |
-          curl -i -H 'Content-Type: application/json' -d '${{ env.EVENT }}' -L '${{ env.ON_DISCUSSION_ANSWERED_URL }}'
+          curl -i -H 'Content-Type: application/json' -d '${{ env.EVENT }}' -L https://us-central1-github-discussions-notifier.cloudfunctions.net/discussion-resolved
         env:
           EVENT: ${{ toJson(github.event) }}
-          ON_DISCUSSION_ANSWERED_URL: ${{ secrets.ON_DISCUSSION_ANSWERED_URL }}
